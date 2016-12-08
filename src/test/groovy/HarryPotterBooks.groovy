@@ -30,6 +30,18 @@ class HarryPotterBooks extends Specification {
 		booksAreDifferent
 	}
 
+	def "check that two copies of the same book are equal"() {
+		given:
+		def bookOne = newBook(8, "Philosopher's Stone")
+		def bookTwo = newBook(8, "Philosopher's Stone")
+
+		when:
+		def booksAreDifferent = booksAreDifferent(bookOne, bookTwo)
+
+		then:
+		!booksAreDifferent
+	}
+
 	def booksAreDifferent(bookOne, bookTwo) {
 		return bookOne != bookTwo
 	}
