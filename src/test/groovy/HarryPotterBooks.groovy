@@ -5,7 +5,7 @@ class HarryPotterBooks extends Specification {
 
 	def "a book has a specific price"(){
 		given:
-		def book = [price: 8]
+		def book = [price: 8, name: "Philosopher's Stone"]
 
 		when:
 		def bookPrice = book.price
