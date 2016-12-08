@@ -5,13 +5,17 @@ class HarryPotterBooks extends Specification {
 
 	def "a book has a specific price"(){
 		given:
-		def book = [price: 8, name: "Philosopher's Stone"]
+		def book = newBook(8, "Philosopher's Stone")
 
 		when:
 		def bookPrice = book.price
 
 		then:
 		bookPrice == 8
+	}
+
+	private newBook(bookPrice, bookName) {
+		[price: bookPrice, name: bookName]
 	}
 
 	def "checks that two different books are different"() {
