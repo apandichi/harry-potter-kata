@@ -45,7 +45,7 @@ class HarryPotterBooks extends Specification {
 	def "a set of copies of the same book are eligible for discount"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Chamber of Secrets")
+		def bookTwo = newBook(8, "Philosopher's Stone")
 
 		when:
 		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookTwo])
@@ -55,7 +55,7 @@ class HarryPotterBooks extends Specification {
 	}
 
 	def booksAreEligibleForDiscount(def books) {
-		return booksAreDifferent(*books)
+		return !booksAreDifferent(*books)
 	}
 
 	def booksAreDifferent(bookOne, bookTwo) {
