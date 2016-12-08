@@ -13,4 +13,20 @@ class HarryPotterBooks extends Specification {
 		then:
 		bookPrice == 8
 	}
+
+	def "checks that two different books are different"() {
+		given:
+		def bookOne = [price: 8, name: "Philosopher's Stone"]
+		def bookTwo = [price: 8, name: "Chamber of Secrets"]
+
+		when:
+		def booksAreDifferent = booksAreDifferent(bookOne, bookTwo)
+
+		then:
+		booksAreDifferent
+	}
+
+	def booksAreDifferent(bookOne, bookTwo) {
+		return bookOne != bookTwo
+	}
 }
