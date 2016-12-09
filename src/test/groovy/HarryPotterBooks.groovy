@@ -68,6 +68,17 @@ class HarryPotterBooks extends Specification {
 		!booksAreEligibleForDiscount
 	}
 
+	def "a set of no books has no discount"() {
+		given:
+		def books = []
+
+		when:
+		def discount = getDiscount(books)
+
+		then:
+		discount == 0
+	}
+
 	def "one book has no discount"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
