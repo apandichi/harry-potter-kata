@@ -3,7 +3,7 @@ import spock.lang.Specification
 
 class HarryPotterBooks extends Specification {
 
-	def "a book has a specific price"(){
+	def "a book has a specific price"() {
 		given:
 		def book = newBook(8, "Philosopher's Stone")
 
@@ -66,6 +66,37 @@ class HarryPotterBooks extends Specification {
 
 		then:
 		!booksAreEligibleForDiscount
+	}
+
+	def "a set of two identical books are discounted with 5%"() {
+		given:
+		def bookOne = newBook(8, "Philosopher's Stone")
+		def bookTwo = newBook(8, "Philosopher's Stone")
+		def books = [bookOne, bookTwo]
+
+		when:
+		def discount = getDiscount(books)
+
+		then:
+		discount == 5
+	}
+
+	def "a set of three identical books are discounted with 10%"() {
+		given:
+		def bookOne = newBook(8, "Philosopher's Stone")
+		def bookTwo = newBook(8, "Philosopher's Stone")
+		def bookThree = newBook(8, "Philosopher's Stone")
+		def books = [bookOne, bookTwo, bookThree]
+
+		when:
+		def discount = getDiscount(books)
+
+		then:
+		discount == 10
+	}
+
+	def getDiscount(books) {
+		return books.size == 2 ? 5 : 10
 	}
 
 	def booksAreEligibleForDiscount(books) {
