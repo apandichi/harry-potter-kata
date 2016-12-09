@@ -68,6 +68,18 @@ class HarryPotterBooks extends Specification {
 		!booksAreEligibleForDiscount
 	}
 
+	def "one book has no discount"() {
+		given:
+		def bookOne = newBook(8, "Philosopher's Stone")
+		def books = [bookOne]
+
+		when:
+		def discount = getDiscount(books)
+
+		then:
+		discount == 0
+	}
+
 	def "a set of two identical books are discounted with 5%"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
@@ -96,7 +108,8 @@ class HarryPotterBooks extends Specification {
 	}
 
 	def getDiscount(books) {
-		return books.size == 2 ? 5 : 10
+		def discounts = [0, 0, 5, 10]
+		return discounts[books.size]
 	}
 
 	def booksAreEligibleForDiscount(books) {
