@@ -91,7 +91,7 @@ class HarryPotterBooks extends Specification {
 		discount == 0
 	}
 
-	def "a set of two books are discounted with 5%"() {
+	def "a set of two identical books are not discounted"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
 		def bookTwo = newBook(8, "Philosopher's Stone")
@@ -101,14 +101,27 @@ class HarryPotterBooks extends Specification {
 		def discount = getDiscount(books)
 
 		then:
+		discount == 0
+	}
+
+	def "a set of two different books are discounted with 5%"() {
+		given:
+		def bookOne = newBook(8, "Philosopher's Stone")
+		def bookTwo = newBook(8, "Chamber of Secrets")
+		def books = [bookOne, bookTwo]
+
+		when:
+		def discount = getDiscount(books)
+
+		then:
 		discount == 5
 	}
 
-	def "a set of three books are discounted with 10%"() {
+	def "a set of three different books are discounted with 10%"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Philosopher's Stone")
-		def bookThree = newBook(8, "Philosopher's Stone")
+		def bookTwo = newBook(8, "Chamber of Secrets")
+		def bookThree = newBook(8, "Prisoner of Azkaban")
 		def books = [bookOne, bookTwo, bookThree]
 
 		when:
@@ -120,7 +133,7 @@ class HarryPotterBooks extends Specification {
 
 	def getDiscount(books) {
 		def discounts = [0, 0, 5, 10]
-		return discounts[books.size]
+		return booksAreEligibleForDiscount(books) ? discounts[books.size] : 0
 	}
 
 	def booksAreEligibleForDiscount(books) {
