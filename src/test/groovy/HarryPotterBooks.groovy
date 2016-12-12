@@ -1,4 +1,5 @@
 import spock.lang.Specification
+import spock.lang.Unroll
 
 
 class HarryPotterBooks extends Specification {
@@ -68,28 +69,6 @@ class HarryPotterBooks extends Specification {
 		booksAreEligibleForDiscount
 	}
 
-	def "a set of no books has no discount"() {
-		given:
-		def books = firstBooks(0)
-
-		when:
-		def discount = getDiscount(books)
-
-		then:
-		discount == 0
-	}
-
-	def "one book has no discount"() {
-		given:
-		def books = firstBooks(1)
-
-		when:
-		def discount = getDiscount(books)
-
-		then:
-		discount == 0
-	}
-
 	def "a set of two identical books are not discounted"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
@@ -103,48 +82,25 @@ class HarryPotterBooks extends Specification {
 		discount == 0
 	}
 
-	def "a set of two different books are discounted with 5%"() {
+	@Unroll
+	def "a set of #numberOfBooks different books are discounted with #discount%"() {
 		given:
-		def books = firstBooks(2)
+		def books = firstBooks(numberOfBooks)
 
 		when:
-		def discount = getDiscount(books)
+		def discountResult = getDiscount(books)
 
 		then:
-		discount == 5
-	}
+		discountResult == discount
 
-	def "a set of three different books are discounted with 10%"() {
-		given:
-		def books = firstBooks(3)
-
-		when:
-		def discount = getDiscount(books)
-
-		then:
-		discount == 10
-	}
-
-	def "a set of four different books are discounted with 20%"() {
-		given:
-		def books = firstBooks(4)
-
-		when:
-		def discount = getDiscount(books)
-
-		then:
-		discount == 20
-	}
-
-	def "a set of five different books are discounted with 25%"() {
-		given:
-		def books = firstBooks(5)
-
-		when:
-		def discount = getDiscount(books)
-
-		then:
-		discount == 25
+		where:
+		numberOfBooks | discount
+		0             | 0
+		1             | 0
+		2             | 5
+		3             | 10
+		4             | 20
+		5             | 25
 	}
 
 	def firstBooks(numberOfBooks) {
