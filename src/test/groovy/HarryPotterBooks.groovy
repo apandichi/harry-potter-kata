@@ -70,7 +70,7 @@ class HarryPotterBooks extends Specification {
 
 	def "a set of no books has no discount"() {
 		given:
-		def books = []
+		def books = firstBooks(0)
 
 		when:
 		def discount = getDiscount(books)
@@ -81,8 +81,7 @@ class HarryPotterBooks extends Specification {
 
 	def "one book has no discount"() {
 		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def books = [bookOne]
+		def books = firstBooks(1)
 
 		when:
 		def discount = getDiscount(books)
@@ -106,9 +105,7 @@ class HarryPotterBooks extends Specification {
 
 	def "a set of two different books are discounted with 5%"() {
 		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Chamber of Secrets")
-		def books = [bookOne, bookTwo]
+		def books = firstBooks(2)
 
 		when:
 		def discount = getDiscount(books)
@@ -119,10 +116,7 @@ class HarryPotterBooks extends Specification {
 
 	def "a set of three different books are discounted with 10%"() {
 		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Chamber of Secrets")
-		def bookThree = newBook(8, "Prisoner of Azkaban")
-		def books = [bookOne, bookTwo, bookThree]
+		def books = firstBooks(3)
 
 		when:
 		def discount = getDiscount(books)
@@ -133,11 +127,7 @@ class HarryPotterBooks extends Specification {
 
 	def "a set of four different books are discounted with 20%"() {
 		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Chamber of Secrets")
-		def bookThree = newBook(8, "Prisoner of Azkaban")
-		def bookFour = newBook(8, "Goblet of Fire")
-		def books = [bookOne, bookTwo, bookThree, bookFour]
+		def books = firstBooks(4)
 
 		when:
 		def discount = getDiscount(books)
@@ -148,13 +138,17 @@ class HarryPotterBooks extends Specification {
 
 	def "a set of five different books are discounted with 25%"() {
 		given:
-		def books = allBooks()
+		def books = firstBooks(5)
 
 		when:
 		def discount = getDiscount(books)
 
 		then:
 		discount == 25
+	}
+
+	def firstBooks(numberOfBooks) {
+		return allBooks().subList(0, numberOfBooks)
 	}
 
 	private allBooks() {
