@@ -148,18 +148,22 @@ class HarryPotterBooks extends Specification {
 
 	def "a set of five different books are discounted with 25%"() {
 		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Chamber of Secrets")
-		def bookThree = newBook(8, "Prisoner of Azkaban")
-		def bookFour = newBook(8, "Goblet of Fire")
-		def bookFive = newBook(8, "Order of the Phoenix")
-		def books = [bookOne, bookTwo, bookThree, bookFour, bookFive]
+		def books = allBooks()
 
 		when:
 		def discount = getDiscount(books)
 
 		then:
 		discount == 25
+	}
+
+	private allBooks() {
+		def bookOne = newBook(8, "Philosopher's Stone")
+		def bookTwo = newBook(8, "Chamber of Secrets")
+		def bookThree = newBook(8, "Prisoner of Azkaban")
+		def bookFour = newBook(8, "Goblet of Fire")
+		def bookFive = newBook(8, "Order of the Phoenix")
+		return [bookOne, bookTwo, bookThree, bookFour, bookFive]
 	}
 
 	def getDiscount(books) {
