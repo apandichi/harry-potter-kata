@@ -103,7 +103,28 @@ class HarryPotterBooks extends Specification {
 		4             | 20
 		5             | 25
 	}
-	
+
+	@Unroll
+	def "apply discount of #discount% for price of #price results in discounted price of #discountedPriceExpected"() {
+		when:
+		def discountedPrice = applyDiscountForPrice(discount, price)
+
+		then:
+		discountedPrice == discountedPriceExpected
+
+		where:
+		discount | price | discountedPriceExpected
+		0        | 10    | 10
+		5        | 10    | 9
+		10       | 10    | 9
+		20       | 10    | 8
+		25       | 10    | 7.5
+	}
+
+	def applyDiscountForPrice(discount, price) {
+		return price - price * discount / 100
+	}
+
 	@Ignore
 	def "four books, of which 3 are different, get a 10% discount for the set of 3, but the fourth book still costs 8 EUR"() {
 		given:
@@ -113,7 +134,7 @@ class HarryPotterBooks extends Specification {
 		def price = getDiscountedPrice(books)
 
 		then:
-		price ==  applyDiscountForPrice(10, (8 * 3)) + 8
+		price == applyDiscountForPrice(10, (8 * 3)) + 8
 	}
 
 	def firstBooks(numberOfBooks) {
