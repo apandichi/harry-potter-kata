@@ -19,7 +19,7 @@ class HarryPotterBooks extends Specification {
 		[price: bookPrice, name: bookName]
 	}
 
-	def "checks that two different books are different"() {
+	def "two different books are different"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
 		def bookTwo = newBook(8, "Chamber of Secrets")
@@ -31,7 +31,7 @@ class HarryPotterBooks extends Specification {
 		booksAreDifferent
 	}
 
-	def "check that two copies of the same book are equal"() {
+	def "two copies of the same book are equal"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
 		def bookTwo = newBook(8, "Philosopher's Stone")
