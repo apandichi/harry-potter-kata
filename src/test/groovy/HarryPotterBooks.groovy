@@ -1,3 +1,4 @@
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -101,6 +102,18 @@ class HarryPotterBooks extends Specification {
 		3             | 10
 		4             | 20
 		5             | 25
+	}
+	
+	@Ignore
+	def "four books, of which 3 are different, get a 10% discount for the set of 3, but the fourth book still costs 8 EUR"() {
+		given:
+		def books = firstBooks(3) + firstBooks(1)
+
+		when:
+		def price = getDiscountedPrice(books)
+
+		then:
+		price ==  applyDiscountForPrice(10, (8 * 3)) + 8
 	}
 
 	def firstBooks(numberOfBooks) {
