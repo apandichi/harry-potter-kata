@@ -119,6 +119,11 @@ class HarryPotterBooks extends Specification {
 		10       | 10    | 9
 		20       | 10    | 8
 		25       | 10    | 7.5
+		0        | 8     | 8
+		5        | 8     | 7.6
+		10       | 8     | 7.2
+		20       | 8     | 6.4
+		25       | 8     | 6
 	}
 
 	def applyDiscountForPrice(discount, price) {
