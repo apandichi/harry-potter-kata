@@ -115,7 +115,7 @@ class HarryPotterBooks extends Specification {
 		where:
 		discount | price | discountedPriceExpected
 		0        | 10    | 10
-		5        | 10    | 9
+		5        | 10    | 9.5
 		10       | 10    | 9
 		20       | 10    | 8
 		25       | 10    | 7.5
