@@ -135,12 +135,19 @@ class HarryPotterBooks extends Specification {
 		fullPrice == expectedFullPrice
 
 		where:
-		books | expectedFullPrice
-		[]    | 0
+		books                         | expectedFullPrice
+		[]                            | 0
+		firstBooks(0)                 | 0
+		firstBooks(1)                 | 8
+		firstBooks(1) + firstBooks(1) | 16
+		firstBooks(2)                 | 16
+		firstBooks(2) + firstBooks(1) | 24
+		firstBooks(5)                 | 40
+		allBooks()                    | 40
 	}
 
 	def getFullPrice(books) {
-		return 0
+		return books.inject(0, { acc, val -> acc + val.price })
 	}
 
 	def applyDiscountForPrice(discount, price) {
