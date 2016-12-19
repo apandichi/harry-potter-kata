@@ -126,6 +126,21 @@ class HarryPotterBooks extends Specification {
 		25       | 8     | 6
 	}
 
+	def "calculate full price for a set of books"() {
+		given:
+		def books = []
+
+		when:
+		def fullPrice = getFullPrice(books)
+
+		then:
+		fullPrice == 0
+	}
+
+	def getFullPrice(books) {
+		return 0
+	}
+
 	def applyDiscountForPrice(discount, price) {
 		return price - price * discount / 100
 	}
