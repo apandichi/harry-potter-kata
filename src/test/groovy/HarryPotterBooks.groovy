@@ -142,6 +142,15 @@ class HarryPotterBooks extends Specification {
 		price == applyDiscountForPrice(10, (8 * 3)) + 8
 	}
 
+	def getDiscountedPrice(books) {
+		def groupsOfBooks = groupBooks(books)
+		return groupsOfBooks.collect {
+			def discount = getDiscount(it)
+			def price = getFullPrice(it)
+			return applyDiscountForPrice(discount, price)
+		}
+	}
+
 	def firstBooks(numberOfBooks) {
 		return allBooks().subList(0, numberOfBooks)
 	}
