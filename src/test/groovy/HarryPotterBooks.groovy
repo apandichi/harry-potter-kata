@@ -58,6 +58,9 @@ class HarryPotterBooks extends Specification {
 		firstBooks(2)                 | true
 		firstBooks(1) + firstBooks(1) | false
 		allBooks()                    | true
+		[[price: 8, name: "Philosopher's Stone"],
+		 [price: 8, name: "Prisoner of Azkaban"],
+		 [price: 8, name: "Philosopher's Stone"]] | false
 	}
 
 	def "a set of copies of the same book are not eligible for discount"() {
@@ -250,8 +253,7 @@ class HarryPotterBooks extends Specification {
 	}
 
 	def booksAreDifferent(books) {
-		def booksAreTheSame = books.unique(false).size == 1
-		return books.size < 2 || !booksAreTheSame
+		return books.groupBy { it.name }.size() == books.size()
 	}
 
 	def booksAreDifferent(bookOne, bookTwo) {
