@@ -146,6 +146,21 @@ class HarryPotterBooks extends Specification {
 		allBooks()                    | 40
 	}
 
+	def "group a set of various books into a list of groups, each containing different books"() {
+		given:
+		def books = []
+
+		when:
+		def groupsOfBooks = groupBooks(books)
+
+		then:
+		groupsOfBooks == []
+	}
+
+	def groupBooks(books) {
+		books
+	}
+
 	def getFullPrice(books) {
 		return books.inject(0, { acc, val -> acc + val.price })
 	}
