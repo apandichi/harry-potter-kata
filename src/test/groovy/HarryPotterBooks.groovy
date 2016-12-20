@@ -162,19 +162,39 @@ class HarryPotterBooks extends Specification {
 		allBooks()                    | 40
 	}
 
+	@Unroll
 	def "group a set of various books into a list of groups, each containing different books"() {
-		given:
-		def books = []
-
 		when:
 		def groupsOfBooks = groupBooks(books)
 
 		then:
-		groupsOfBooks == []
+		groupsOfBooks == expectedGroupsOfBooks
+		groupsOfBooks.size() == groupsSizeExpected
+		groupsOfBooks.size() < 1 || groupsOfBooks.each { assert booksAreDifferent(it) }
+
+		where:
+		books                               | expectedGroupsOfBooks                 | groupsSizeExpected
+		[]                                  | []                                    | 0
+		firstBooks(1)                       | [[newBook(8, "Philosopher's Stone")]] | 1
+		firstBooks(2)                       | [firstBooks(2)]                       | 1
+		firstBooks(1) + firstBooks(1)       | [firstBooks(1), firstBooks(1)]        | 2
+		firstBooks(1) + firstBooks(2)       | [firstBooks(2), firstBooks(1)]        | 2
 	}
 
-	def groupBooks(books) {
-		books
+	def groupBooks(List books) {
+		books.inject([], { result, book ->
+			println("inject book $book")
+			List foundGroup = result.find { booksAreDifferent(it + [book]) } ?: {
+				println('newGroup')
+				def newGroup = []
+				result.add(newGroup)
+				return newGroup
+			}.call()
+			foundGroup.add(book)
+			println("foundGroup $foundGroup")
+			println("------------")
+			return result
+		})
 	}
 
 	def getFullPrice(books) {
