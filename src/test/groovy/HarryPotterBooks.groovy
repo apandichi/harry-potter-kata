@@ -44,6 +44,22 @@ class HarryPotterBooks extends Specification {
 		!booksAreDifferent
 	}
 
+	def "a set of books are different"() {
+		when:
+		def booksAreDifferent = booksAreDifferent(books)
+
+		then:
+		booksAreDifferent == booksAreDifferentExpected
+
+		where:
+		books                         | booksAreDifferentExpected
+		[]                            | true
+		firstBooks(1)                 | true
+		firstBooks(2)                 | true
+		firstBooks(1) + firstBooks(1) | false
+		allBooks()                    | true
+	}
+
 	def "a set of copies of the same book are not eligible for discount"() {
 		given:
 		def bookOne = newBook(8, "Philosopher's Stone")
@@ -211,6 +227,11 @@ class HarryPotterBooks extends Specification {
 	def booksAreEligibleForDiscount(books) {
 		def booksAreTheSame = books.unique(false).size == 1
 		return !booksAreTheSame
+	}
+
+	def booksAreDifferent(books) {
+		def booksAreTheSame = books.unique(false).size == 1
+		return books.size < 2 || !booksAreTheSame
 	}
 
 	def booksAreDifferent(bookOne, bookTwo) {
