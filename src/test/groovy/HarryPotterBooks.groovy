@@ -1,4 +1,3 @@
-import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -54,9 +53,9 @@ class HarryPotterBooks extends Specification {
 		where:
 		books                                     | booksAreDifferentExpected
 		[]                                        | true
-		firstBooks(1)                             | true
-		firstBooks(2)                             | true
-		firstBooks(1) + firstBooks(1)             | false
+		groupOfBooks(1)                           | true
+		groupOfBooks(2)                           | true
+		groupOfBooks(1) + groupOfBooks(1)         | false
 		allBooks()                                | true
 		[[price: 8, name: "Philosopher's Stone"],
 		 [price: 8, name: "Prisoner of Azkaban"],
@@ -105,7 +104,7 @@ class HarryPotterBooks extends Specification {
 	@Unroll
 	def "a set of #numberOfBooks different books are discounted with #discount%"() {
 		given:
-		def books = firstBooks(numberOfBooks)
+		def books = groupOfBooks(numberOfBooks)
 
 		when:
 		def discountResult = getDiscount(books)
@@ -154,15 +153,15 @@ class HarryPotterBooks extends Specification {
 		fullPrice == expectedFullPrice
 
 		where:
-		books                         | expectedFullPrice
-		[]                            | 0
-		firstBooks(0)                 | 0
-		firstBooks(1)                 | 8
-		firstBooks(1) + firstBooks(1) | 16
-		firstBooks(2)                 | 16
-		firstBooks(2) + firstBooks(1) | 24
-		firstBooks(5)                 | 40
-		allBooks()                    | 40
+		books                             | expectedFullPrice
+		[]                                | 0
+		groupOfBooks(0)                   | 0
+		groupOfBooks(1)                   | 8
+		groupOfBooks(1) + groupOfBooks(1) | 16
+		groupOfBooks(2)                   | 16
+		groupOfBooks(2) + groupOfBooks(1) | 24
+		groupOfBooks(5)                   | 40
+		allBooks()                        | 40
 	}
 
 	@Unroll
@@ -178,10 +177,10 @@ class HarryPotterBooks extends Specification {
 		where:
 		books                               | expectedGroupsOfBooks                 | groupsSizeExpected
 		[]                                  | []                                    | 0
-		firstBooks(1)                       | [[newBook(8, "Philosopher's Stone")]] | 1
-		firstBooks(2)                       | [firstBooks(2)]                       | 1
-		firstBooks(1) + firstBooks(1)       | [firstBooks(1), firstBooks(1)]        | 2
-		firstBooks(1) + firstBooks(2)       | [firstBooks(2), firstBooks(1)]        | 2
+		groupOfBooks(1)                     | [[newBook(8, "Philosopher's Stone")]] | 1
+		groupOfBooks(2)                     | [groupOfBooks(2)]                     | 1
+		groupOfBooks(1) + groupOfBooks(1)   | [groupOfBooks(1), groupOfBooks(1)]    | 2
+		groupOfBooks(1) + groupOfBooks(2)   | [groupOfBooks(2), groupOfBooks(1)]    | 2
 		[newBook(8, "Philosopher's Stone"),
 		 newBook(8, "Philosopher's Stone"),
 		 newBook(8, "Prisoner of Azkaban"),
@@ -217,7 +216,7 @@ class HarryPotterBooks extends Specification {
 
 	def "four books, of which 3 are different, get a 10% discount for the set of 3, but the fourth book still costs 8 EUR"() {
 		given:
-		def books = firstBooks(3) + firstBooks(1)
+		def books = groupOfBooks(3) + groupOfBooks(1)
 
 		when:
 		def price = getDiscountedPrice(books)
@@ -235,7 +234,7 @@ class HarryPotterBooks extends Specification {
 		}.sum()
 	}
 
-	def firstBooks(numberOfBooks) {
+	def groupOfBooks(numberOfBooks) {
 		return allBooks().subList(0, numberOfBooks)
 	}
 
