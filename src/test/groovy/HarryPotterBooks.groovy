@@ -58,13 +58,13 @@ class HarryPotterBooks extends Specification {
 		booksAreDifferent == booksAreDifferentExpected
 
 		where:
-		books                                     | booksAreDifferentExpected
-		[]                                        | true
-		groupOfBooks(1)                           | true
-		groupOfBooks(2)                           | true
-		groupOfBooks(1) + groupOfBooks(1)         | false
-		allBooks()                                | true
-		[bookOne, bookTwo, bookOne] | false
+		books                             | booksAreDifferentExpected
+		[]                                | true
+		groupOfBooks(1)                   | true
+		groupOfBooks(2)                   | true
+		groupOfBooks(1) + groupOfBooks(1) | false
+		allBooks()                        | true
+		[bookOne, bookTwo, bookOne]       | false
 	}
 
 	def "a set of copies of the same book are not eligible for discount"() {
@@ -168,23 +168,13 @@ class HarryPotterBooks extends Specification {
 		groupsOfBooks.size() < 1 || groupsOfBooks.each { assert booksAreDifferent(it) }
 
 		where:
-		books                               | expectedGroupsOfBooks                 | groupsSizeExpected
-		[]                                  | []                                    | 0
-		groupOfBooks(1)                     | [[newBook(8, "Philosopher's Stone")]] | 1
-		groupOfBooks(2)                     | [groupOfBooks(2)]                     | 1
-		groupOfBooks(1) + groupOfBooks(1)   | [groupOfBooks(1), groupOfBooks(1)]    | 2
-		groupOfBooks(1) + groupOfBooks(2)   | [groupOfBooks(2), groupOfBooks(1)]    | 2
-		[bookOne,
-		 bookOne,
-		 bookTwo,
-		 bookOne,
-		 bookThree,
-		 bookTwo] | [[bookOne,
-		              bookTwo,
-		              bookThree],
-		                                       [bookOne,
-		                                        bookTwo],
-		                                       [bookOne]] | 3
+		books                                                    | expectedGroupsOfBooks                                          | groupsSizeExpected
+		[]                                                       | []                                                             | 0
+		groupOfBooks(1)                                          | [[newBook(8, "Philosopher's Stone")]]                          | 1
+		groupOfBooks(2)                                          | [groupOfBooks(2)]                                              | 1
+		groupOfBooks(1) + groupOfBooks(1)                        | [groupOfBooks(1), groupOfBooks(1)]                             | 2
+		groupOfBooks(1) + groupOfBooks(2)                        | [groupOfBooks(2), groupOfBooks(1)]                             | 2
+		[bookOne, bookOne, bookTwo, bookOne, bookThree, bookTwo] | [[bookOne, bookTwo, bookThree], [bookOne, bookTwo], [bookOne]] | 3
 	}
 
 	@Ignore
@@ -196,7 +186,7 @@ class HarryPotterBooks extends Specification {
 		def discountedPrice = getDiscountedPrice(basketOfBooks)
 
 		then:
-		discountedPrice ==  51.2
+		discountedPrice == 51.2
 	}
 
 	@Unroll
