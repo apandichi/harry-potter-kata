@@ -176,12 +176,12 @@ class HarryPotterBooks extends Specification {
 		groupsOfBooks.size() < 1 || groupsOfBooks.each { assert booksAreDifferent(it) }
 
 		where:
-		books                         | expectedGroupsOfBooks                 | groupsSizeExpected
-		[]                            | []                                    | 0
-		firstBooks(1)                 | [[newBook(8, "Philosopher's Stone")]] | 1
-		firstBooks(2)                 | [firstBooks(2)]                       | 1
-		firstBooks(1) + firstBooks(1) | [firstBooks(1), firstBooks(1)]        | 2
-		firstBooks(1) + firstBooks(2) | [firstBooks(2), firstBooks(1)]        | 2
+		books                               | expectedGroupsOfBooks                 | groupsSizeExpected
+		[]                                  | []                                    | 0
+		firstBooks(1)                       | [[newBook(8, "Philosopher's Stone")]] | 1
+		firstBooks(2)                       | [firstBooks(2)]                       | 1
+		firstBooks(1) + firstBooks(1)       | [firstBooks(1), firstBooks(1)]        | 2
+		firstBooks(1) + firstBooks(2)       | [firstBooks(2), firstBooks(1)]        | 2
 		[newBook(8, "Philosopher's Stone"),
 		 newBook(8, "Philosopher's Stone"),
 		 newBook(8, "Prisoner of Azkaban"),
