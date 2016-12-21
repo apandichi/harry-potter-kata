@@ -194,6 +194,18 @@ class HarryPotterBooks extends Specification {
 		                                       [newBook(8, "Philosopher's Stone")]] | 3
 	}
 
+	def "a specific basket of books costs 51.2 after discount"() {
+		given:
+		def basketOfBooks = copiesOfBook(2, 1) + copiesOfBook(2, 2) + copiesOfBook(2, 3) + copiesOfBook(1, 4) + copiesOfBook(1, 5)
+
+		when:
+		def discountedPrice = getDiscountedPrice(basketOfBooks)
+
+		then:
+		discountedPrice ==  51.2
+	}
+	
+
 	@Unroll
 	def "get copies of the same book"() {
 		when:
