@@ -182,6 +182,17 @@ class HarryPotterBooks extends Specification {
 		firstBooks(2)                 | [firstBooks(2)]                       | 1
 		firstBooks(1) + firstBooks(1) | [firstBooks(1), firstBooks(1)]        | 2
 		firstBooks(1) + firstBooks(2) | [firstBooks(2), firstBooks(1)]        | 2
+		[newBook(8, "Philosopher's Stone"),
+		 newBook(8, "Philosopher's Stone"),
+		 newBook(8, "Prisoner of Azkaban"),
+		 newBook(8, "Philosopher's Stone"),
+		 newBook(8, "Goblet of Fire"),
+		 newBook(8, "Prisoner of Azkaban")] | [[newBook(8, "Philosopher's Stone"),
+		                                        newBook(8, "Prisoner of Azkaban"),
+		                                        newBook(8, "Goblet of Fire")],
+		                                       [newBook(8, "Philosopher's Stone"),
+		                                        newBook(8, "Prisoner of Azkaban")],
+		                                       [newBook(8, "Philosopher's Stone")]] | 3
 	}
 
 	def groupBooks(List books) {
