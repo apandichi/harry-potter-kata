@@ -13,7 +13,7 @@ class HarryPotterBooks extends Specification {
 
 	def "a book has a specific price"() {
 		given:
-		def book = newBook(8, "Philosopher's Stone")
+		def book = bookOne
 
 		when:
 		def bookPrice = book.price
@@ -64,32 +64,20 @@ class HarryPotterBooks extends Specification {
 		groupOfBooks(2)                           | true
 		groupOfBooks(1) + groupOfBooks(1)         | false
 		allBooks()                                | true
-		[[price: 8, name: "Philosopher's Stone"],
-		 [price: 8, name: "Prisoner of Azkaban"],
-		 [price: 8, name: "Philosopher's Stone"]] | false
+		[bookOne, bookTwo, bookOne] | false
 	}
 
 	def "a set of copies of the same book are not eligible for discount"() {
-		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Philosopher's Stone")
-		def bookThree = newBook(8, "Philosopher's Stone")
-
 		when:
-		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookTwo, bookThree])
+		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookOne, bookOne])
 
 		then:
 		!booksAreEligibleForDiscount
 	}
 
 	def "a set of different books are eligible for discount"() {
-		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Chamber of Secrets")
-		def bookThree = newBook(8, "Chamber of Secrets")
-
 		when:
-		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookTwo, bookThree])
+		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookTwo, bookTwo])
 
 		then:
 		booksAreEligibleForDiscount
@@ -97,9 +85,7 @@ class HarryPotterBooks extends Specification {
 
 	def "a set of two identical books are not discounted"() {
 		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Philosopher's Stone")
-		def books = [bookOne, bookTwo]
+		def books = [bookOne, bookOne]
 
 		when:
 		def discount = getDiscount(books)
@@ -188,17 +174,17 @@ class HarryPotterBooks extends Specification {
 		groupOfBooks(2)                     | [groupOfBooks(2)]                     | 1
 		groupOfBooks(1) + groupOfBooks(1)   | [groupOfBooks(1), groupOfBooks(1)]    | 2
 		groupOfBooks(1) + groupOfBooks(2)   | [groupOfBooks(2), groupOfBooks(1)]    | 2
-		[newBook(8, "Philosopher's Stone"),
-		 newBook(8, "Philosopher's Stone"),
-		 newBook(8, "Prisoner of Azkaban"),
-		 newBook(8, "Philosopher's Stone"),
-		 newBook(8, "Goblet of Fire"),
-		 newBook(8, "Prisoner of Azkaban")] | [[newBook(8, "Philosopher's Stone"),
-		                                        newBook(8, "Prisoner of Azkaban"),
-		                                        newBook(8, "Goblet of Fire")],
-		                                       [newBook(8, "Philosopher's Stone"),
-		                                        newBook(8, "Prisoner of Azkaban")],
-		                                       [newBook(8, "Philosopher's Stone")]] | 3
+		[bookOne,
+		 bookOne,
+		 bookTwo,
+		 bookOne,
+		 bookThree,
+		 bookTwo] | [[bookOne,
+		              bookTwo,
+		              bookThree],
+		                                       [bookOne,
+		                                        bookTwo],
+		                                       [bookOne]] | 3
 	}
 
 	@Ignore
@@ -212,7 +198,6 @@ class HarryPotterBooks extends Specification {
 		then:
 		discountedPrice ==  51.2
 	}
-	
 
 	@Unroll
 	def "get copies of the same book"() {
@@ -226,9 +211,9 @@ class HarryPotterBooks extends Specification {
 		copies | bookIndex | expectedBooks
 		0      | 0         | []
 		0      | 1         | []
-		1      | 1         | [newBook(8, "Philosopher's Stone")]
-		1      | 2         | [newBook(8, "Chamber of Secrets")]
-		2      | 2         | [newBook(8, "Chamber of Secrets"), newBook(8, "Chamber of Secrets")]
+		1      | 1         | [bookOne]
+		1      | 2         | [bookTwo]
+		2      | 2         | [bookTwo, bookTwo]
 	}
 
 	def copiesOfBook(copies, bookIndex) {
