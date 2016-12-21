@@ -194,6 +194,29 @@ class HarryPotterBooks extends Specification {
 		                                       [newBook(8, "Philosopher's Stone")]] | 3
 	}
 
+	@Unroll
+	def "get copies of the same book"() {
+		when:
+		def books = copiesOfBook(copies, bookIndex)
+
+		then:
+		books == expectedBooks
+
+		where:
+		copies | bookIndex | expectedBooks
+		0      | 0         | []
+		0      | 1         | []
+		1      | 1         | [newBook(8, "Philosopher's Stone")]
+		1      | 2         | [newBook(8, "Chamber of Secrets")]
+		2      | 2         | [newBook(8, "Chamber of Secrets"), newBook(8, "Chamber of Secrets")]
+	}
+
+	def copiesOfBook(copies, bookIndex) {
+		copies > 0 ? (1..copies).collect {
+			[allBooks().get(bookIndex - 1)]
+		}.sum() : []
+	}
+
 	def groupBooks(List books) {
 		books.inject([], { result, book ->
 			List foundGroup = result.find { booksAreDifferent(it + [book]) } ?: {
