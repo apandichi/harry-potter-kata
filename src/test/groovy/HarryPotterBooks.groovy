@@ -223,7 +223,7 @@ class HarryPotterBooks extends Specification {
 		def price = getDiscountedPrice(books)
 
 		then:
-		price == applyDiscountForPrice(10, (8 * 3)) + 8
+		price == 29.6
 	}
 
 	def getDiscountedPrice(books) {
