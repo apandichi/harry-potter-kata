@@ -197,16 +197,12 @@ class HarryPotterBooks extends Specification {
 
 	def groupBooks(List books) {
 		books.inject([], { result, book ->
-			println("inject book $book")
 			List foundGroup = result.find { booksAreDifferent(it + [book]) } ?: {
-				println('newGroup')
 				def newGroup = []
 				result.add(newGroup)
 				return newGroup
 			}.call()
 			foundGroup.add(book)
-			println("foundGroup $foundGroup")
-			println("------------")
 			return result
 		})
 	}
