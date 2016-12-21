@@ -215,7 +215,6 @@ class HarryPotterBooks extends Specification {
 		return price - price * discount / 100
 	}
 
-	@Ignore
 	def "four books, of which 3 are different, get a 10% discount for the set of 3, but the fourth book still costs 8 EUR"() {
 		given:
 		def books = firstBooks(3) + firstBooks(1)
@@ -233,7 +232,7 @@ class HarryPotterBooks extends Specification {
 			def discount = getDiscount(it)
 			def price = getFullPrice(it)
 			return applyDiscountForPrice(discount, price)
-		}
+		}.sum()
 	}
 
 	def firstBooks(numberOfBooks) {
