@@ -172,15 +172,15 @@ class HarryPotterBooks extends Specification {
 	@Unroll
 	def "group various books into a list of sets, each set containing different books"() {
 		when:
-		def groupsOfBooks = groupBooks(books)
+		def listOfSetsOfBooks = organizeBooksIntoSets(books)
 
 		then:
-		groupsOfBooks == expectedGroupsOfBooks
-		groupsOfBooks.size() == groupsSizeExpected
-		groupsOfBooks.size() < 1 || groupsOfBooks.each { assert booksAreDifferent(it) }
+		listOfSetsOfBooks == expectedSetsOfBooks
+		listOfSetsOfBooks.size() == sizeExpected
+		listOfSetsOfBooks.size() < 1 || listOfSetsOfBooks.each { assert booksAreDifferent(it) }
 
 		where:
-		books                                                    | expectedGroupsOfBooks                                          | groupsSizeExpected
+		books                                                    | expectedSetsOfBooks                                            | sizeExpected
 		[]                                                       | []                                                             | 0
 		setOfBooks(1)                                            | [[newBook(8, "Philosopher's Stone")]]                          | 1
 		setOfBooks(2)                                            | [setOfBooks(2)]                                                | 1
@@ -224,14 +224,14 @@ class HarryPotterBooks extends Specification {
 		}.sum() : []
 	}
 
-	def groupBooks(List books) {
+	def organizeBooksIntoSets(List books) {
 		books.inject([], { result, book ->
-			List foundGroup = result.find { booksAreDifferent(it + [book]) } ?: {
-				def newGroup = []
-				result.add(newGroup)
-				return newGroup
+			List foundSet = result.find { booksAreDifferent(it + [book]) } ?: {
+				def newSet = []
+				result.add(newSet)
+				return newSet
 			}.call()
-			foundGroup.add(book)
+			foundSet.add(book)
 			return result
 		})
 	}
@@ -256,8 +256,8 @@ class HarryPotterBooks extends Specification {
 	}
 
 	def getDiscountedPrice(books) {
-		def groupsOfBooks = groupBooks(books)
-		return groupsOfBooks.collect {
+		def listOfSetsOfBooks = organizeBooksIntoSets(books)
+		return listOfSetsOfBooks.collect {
 			def discount = getDiscount(it)
 			def price = getFullPrice(it)
 			return getDiscountedPrice(discount, price)
