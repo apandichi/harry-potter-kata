@@ -95,6 +95,18 @@ class HarryPotterBooks extends Specification {
 	}
 
 	@Unroll
+	def "a set of books that contains copies of the same book does not receive a discount"() {
+		given:
+		def books = [bookOne, bookTwo, bookTwo]
+
+		when:
+		def discount = getDiscount(books)
+
+		then:
+		discount == 0
+	}
+
+	@Unroll
 	def "a set of #numberOfBooks different books are discounted with #discount%"() {
 		given:
 		def books = groupOfBooks(numberOfBooks)
@@ -262,7 +274,7 @@ class HarryPotterBooks extends Specification {
 
 	def getDiscount(books) {
 		def discounts = [0, 0, 5, 10, 20, 25]
-		return booksAreEligibleForDiscount(books) ? discounts[books.size] : 0
+		return booksAreDifferent(books) ? discounts[books.size] : 0
 	}
 
 	def booksAreEligibleForDiscount(books) {
