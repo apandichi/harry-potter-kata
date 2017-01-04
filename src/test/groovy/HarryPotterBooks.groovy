@@ -220,8 +220,8 @@ class HarryPotterBooks extends Specification {
 
 	def copiesOfBook(copies, bookIndex) {
 		copies > 0 ? (1..copies).collect {
-			[allBooks().get(bookIndex - 1)]
-		}.sum() : []
+			allBooks().get(bookIndex - 1)
+		} : []
 	}
 
 	def organizeBooksIntoSets(List books) {
