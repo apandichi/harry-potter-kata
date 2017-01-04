@@ -177,7 +177,7 @@ class HarryPotterBooks extends Specification {
 		then:
 		listOfSetsOfBooks == expectedSetsOfBooks
 		listOfSetsOfBooks.size() == sizeExpected
-		listOfSetsOfBooks.size() < 1 || listOfSetsOfBooks.each { assert booksAreDifferent(it) }
+		listOfSetsOfBooks.size() < 1 || listOfSetsOfBooks.every { booksAreDifferent(it) }
 
 		where:
 		books                                                    | expectedSetsOfBooks                                            | sizeExpected
