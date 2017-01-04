@@ -116,25 +116,25 @@ class HarryPotterBooks extends Specification {
 	}
 
 	@Unroll
-	def "apply discount of #discount% for price of #price results in discounted price of #discountedPriceExpected"() {
+	def "applying discount of #discount% on full price of #price results in discounted price of #discountedPriceExpected"() {
 		when:
-		def discountedPrice = applyDiscountForPrice(discount, price)
+		def discountedPrice = getDiscountedPrice(discount, fullPrice)
 
 		then:
 		discountedPrice == discountedPriceExpected
 
 		where:
-		discount | price | discountedPriceExpected
-		0        | 10    | 10
-		5        | 10    | 9.5
-		10       | 10    | 9
-		20       | 10    | 8
-		25       | 10    | 7.5
-		0        | 8     | 8
-		5        | 8     | 7.6
-		10       | 8     | 7.2
-		20       | 8     | 6.4
-		25       | 8     | 6
+		discount | fullPrice | discountedPriceExpected
+		0        | 10        | 10
+		5        | 10        | 9.5
+		10       | 10        | 9
+		20       | 10        | 8
+		25       | 10        | 7.5
+		0        | 8         | 8
+		5        | 8         | 7.6
+		10       | 8         | 7.2
+		20       | 8         | 6.4
+		25       | 8         | 6
 	}
 
 	@Unroll
@@ -228,8 +228,8 @@ class HarryPotterBooks extends Specification {
 		return books.inject(0, { acc, val -> acc + val.price })
 	}
 
-	def applyDiscountForPrice(discount, price) {
-		return price - price * discount / 100
+	def getDiscountedPrice(discount, fullPrice) {
+		return fullPrice - fullPrice * discount / 100
 	}
 
 	def "four books, of which 3 are different, get a 10% discount for the set of 3, but the fourth book still costs 8 EUR"() {
@@ -248,7 +248,7 @@ class HarryPotterBooks extends Specification {
 		return groupsOfBooks.collect {
 			def discount = getDiscount(it)
 			def price = getFullPrice(it)
-			return applyDiscountForPrice(discount, price)
+			return getDiscountedPrice(discount, price)
 		}.sum()
 	}
 
