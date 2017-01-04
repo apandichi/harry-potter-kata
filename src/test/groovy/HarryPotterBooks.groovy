@@ -58,13 +58,13 @@ class HarryPotterBooks extends Specification {
 		booksAreDifferent == booksAreDifferentExpected
 
 		where:
-		books                             | booksAreDifferentExpected
-		[]                                | true
-		groupOfBooks(1)                   | true
-		groupOfBooks(2)                   | true
-		groupOfBooks(1) + groupOfBooks(1) | false
-		allBooks()                        | true
-		[bookOne, bookTwo, bookOne]       | false
+		books                         | booksAreDifferentExpected
+		[]                            | true
+		setOfBooks(1)                 | true
+		setOfBooks(2)                 | true
+		setOfBooks(1) + setOfBooks(1) | false
+		allBooks()                    | true
+		[bookOne, bookTwo, bookOne]   | false
 	}
 
 	def "a set of copies of the same book are not eligible for discount"() {
@@ -109,7 +109,7 @@ class HarryPotterBooks extends Specification {
 	@Unroll
 	def "a set of #numberOfBooks different books are discounted with #discount%"() {
 		given:
-		def books = groupOfBooks(numberOfBooks)
+		def books = setOfBooks(numberOfBooks)
 
 		when:
 		def discountResult = getDiscount(books)
@@ -158,19 +158,19 @@ class HarryPotterBooks extends Specification {
 		fullPrice == expectedFullPrice
 
 		where:
-		books                             | expectedFullPrice
-		[]                                | 0
-		groupOfBooks(0)                   | 0
-		groupOfBooks(1)                   | 8
-		groupOfBooks(1) + groupOfBooks(1) | 16
-		groupOfBooks(2)                   | 16
-		groupOfBooks(2) + groupOfBooks(1) | 24
-		groupOfBooks(5)                   | 40
-		allBooks()                        | 40
+		books                         | expectedFullPrice
+		[]                            | 0
+		setOfBooks(0)                 | 0
+		setOfBooks(1)                 | 8
+		setOfBooks(1) + setOfBooks(1) | 16
+		setOfBooks(2)                 | 16
+		setOfBooks(2) + setOfBooks(1) | 24
+		setOfBooks(5)                 | 40
+		allBooks()                    | 40
 	}
 
 	@Unroll
-	def "group a set of various books into a list of groups, each containing different books"() {
+	def "group various books into a list of sets, each set containing different books"() {
 		when:
 		def groupsOfBooks = groupBooks(books)
 
@@ -182,10 +182,10 @@ class HarryPotterBooks extends Specification {
 		where:
 		books                                                    | expectedGroupsOfBooks                                          | groupsSizeExpected
 		[]                                                       | []                                                             | 0
-		groupOfBooks(1)                                          | [[newBook(8, "Philosopher's Stone")]]                          | 1
-		groupOfBooks(2)                                          | [groupOfBooks(2)]                                              | 1
-		groupOfBooks(1) + groupOfBooks(1)                        | [groupOfBooks(1), groupOfBooks(1)]                             | 2
-		groupOfBooks(1) + groupOfBooks(2)                        | [groupOfBooks(2), groupOfBooks(1)]                             | 2
+		setOfBooks(1)                                            | [[newBook(8, "Philosopher's Stone")]]                          | 1
+		setOfBooks(2)                                            | [setOfBooks(2)]                                                | 1
+		setOfBooks(1) + setOfBooks(1)                            | [setOfBooks(1), setOfBooks(1)]                                 | 2
+		setOfBooks(1) + setOfBooks(2)                            | [setOfBooks(2), setOfBooks(1)]                                 | 2
 		[bookOne, bookOne, bookTwo, bookOne, bookThree, bookTwo] | [[bookOne, bookTwo, bookThree], [bookOne, bookTwo], [bookOne]] | 3
 	}
 
@@ -246,7 +246,7 @@ class HarryPotterBooks extends Specification {
 
 	def "four books, of which 3 are different, get a 10% discount for the set of 3, but the fourth book still costs 8 EUR"() {
 		given:
-		def books = groupOfBooks(3) + groupOfBooks(1)
+		def books = setOfBooks(3) + setOfBooks(1)
 
 		when:
 		def price = getDiscountedPrice(books)
@@ -264,7 +264,7 @@ class HarryPotterBooks extends Specification {
 		}.sum()
 	}
 
-	def groupOfBooks(numberOfBooks) {
+	def setOfBooks(numberOfBooks) {
 		return allBooks().subList(0, numberOfBooks)
 	}
 
