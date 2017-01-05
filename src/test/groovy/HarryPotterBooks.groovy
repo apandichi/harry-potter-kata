@@ -50,6 +50,7 @@ class HarryPotterBooks extends Specification {
 		!booksAreDifferent
 	}
 
+	@Unroll
 	def "a set of books are different"() {
 		when:
 		def booksAreDifferent = booksAreDifferent(books)
@@ -227,11 +228,8 @@ class HarryPotterBooks extends Specification {
 
 	def organizeBooksIntoSets(List books) {
 		books.inject([], { result, book ->
-			List foundSet = result.find { booksAreDifferent(it + [book]) } ?: {
-				def newSet = []
-				result.add(newSet)
-				return newSet
-			}.call()
+			def foundSet = result.find { booksAreDifferent(it + [book]) } ?: []
+			if (foundSet == []) result.add(foundSet)
 			foundSet.add(book)
 			return result
 		})
