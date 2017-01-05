@@ -67,7 +67,7 @@ class HarryPotterBooks extends Specification {
 		[bookOne, bookTwo, bookOne]   | false
 	}
 
-	def "a set of copies of the same book are not eligible for discount"() {
+	def "a list of books containing copies of the same book is not eligible for discount"() {
 		when:
 		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookOne, bookOne])
 
@@ -75,9 +75,17 @@ class HarryPotterBooks extends Specification {
 		!booksAreEligibleForDiscount
 	}
 
-	def "a set of different books are eligible for discount"() {
+	def "a list of books containing different books is eligible for discount"() {
 		when:
 		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookTwo, bookTwo])
+
+		then:
+		booksAreEligibleForDiscount
+	}
+
+	def "a list of books containing only different books is eligible for discount"() {
+		when:
+		def booksAreEligibleForDiscount = booksAreEligibleForDiscount([bookOne, bookTwo, bookThree])
 
 		then:
 		booksAreEligibleForDiscount
