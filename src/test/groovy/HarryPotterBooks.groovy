@@ -26,22 +26,6 @@ class HarryPotterBooks extends Specification {
 		[price: bookPrice, name: bookName]
 	}
 
-	def "two different books are different"() {
-		when:
-		def booksAreDifferent = booksAreDifferent([bookOne, bookTwo])
-
-		then:
-		booksAreDifferent
-	}
-
-	def "two copies of the same book are equal"() {
-		when:
-		def booksAreDifferent = booksAreDifferent([bookOne, bookOne])
-
-		then:
-		!booksAreDifferent
-	}
-
 	@Unroll
 	def "a set of books are different"() {
 		when:
@@ -57,6 +41,8 @@ class HarryPotterBooks extends Specification {
 		setOfBooks(2)                 | true
 		setOfBooks(1) + setOfBooks(1) | false
 		allBooks()                    | true
+		[bookOne, bookOne]            | false
+		[bookOne, bookTwo]            | true
 		[bookOne, bookTwo, bookOne]   | false
 	}
 
