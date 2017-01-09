@@ -6,11 +6,11 @@ import spock.lang.Unroll
 
 class HarryPotterBooks extends Specification {
 
-	static bookOne = newBook(8, "Philosopher's Stone")
-	static bookTwo = newBook(8, "Chamber of Secrets")
-	static bookThree = newBook(8, "Prisoner of Azkaban")
-	static bookFour = newBook(8, "Goblet of Fire")
-	static bookFive = newBook(8, "Order of the Phoenix")
+	static bookOne = new Book(price: 8, name: "Philosopher's Stone")
+	static bookTwo = new Book(price: 8, name: "Chamber of Secrets")
+	static bookThree = new Book(price: 8, name: "Prisoner of Azkaban")
+	static bookFour = new Book(price: 8, name: "Goblet of Fire")
+	static bookFive = new Book(price: 8, name: "Order of the Phoenix")
 
 	def "a book has a specific price"() {
 		given:
@@ -23,9 +23,6 @@ class HarryPotterBooks extends Specification {
 		bookPrice == 8
 	}
 
-	private static newBook(bookPrice, bookName) {
-		new Book(price: bookPrice, name: bookName)
-	}
 
 	@Unroll
 	def "a set of books are different"() {
@@ -163,7 +160,7 @@ class HarryPotterBooks extends Specification {
 		where:
 		books                                                    | expectedSetsOfBooks                                            | sizeExpected
 		[]                                                       | []                                                             | 0
-		setOfBooks(1)                                            | [[newBook(8, "Philosopher's Stone")]]                          | 1
+		setOfBooks(1)                                            | [[new Book(price: 8, name: "Philosopher's Stone")]]            | 1
 		setOfBooks(2)                                            | [setOfBooks(2)]                                                | 1
 		setOfBooks(1) + setOfBooks(1)                            | [setOfBooks(1), setOfBooks(1)]                                 | 2
 		setOfBooks(1) + setOfBooks(2)                            | [setOfBooks(2), setOfBooks(1)]                                 | 2
