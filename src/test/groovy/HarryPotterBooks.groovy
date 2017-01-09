@@ -27,10 +27,6 @@ class HarryPotterBooks extends Specification {
 	}
 
 	def "two different books are different"() {
-		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Chamber of Secrets")
-
 		when:
 		def booksAreDifferent = booksAreDifferent([bookOne, bookTwo])
 
@@ -39,12 +35,8 @@ class HarryPotterBooks extends Specification {
 	}
 
 	def "two copies of the same book are equal"() {
-		given:
-		def bookOne = newBook(8, "Philosopher's Stone")
-		def bookTwo = newBook(8, "Philosopher's Stone")
-
 		when:
-		def booksAreDifferent = booksAreDifferent([bookOne, bookTwo])
+		def booksAreDifferent = booksAreDifferent([bookOne, bookOne])
 
 		then:
 		!booksAreDifferent
