@@ -1,3 +1,4 @@
+import kata.harrypotter.Book
 import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -23,7 +24,7 @@ class HarryPotterBooks extends Specification {
 	}
 
 	private static newBook(bookPrice, bookName) {
-		[price: bookPrice, name: bookName]
+		new Book(price: bookPrice, name: bookName)
 	}
 
 	@Unroll
