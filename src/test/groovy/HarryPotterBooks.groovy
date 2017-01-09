@@ -32,7 +32,7 @@ class HarryPotterBooks extends Specification {
 		def bookTwo = newBook(8, "Chamber of Secrets")
 
 		when:
-		def booksAreDifferent = booksAreDifferent(bookOne, bookTwo)
+		def booksAreDifferent = booksAreDifferent([bookOne, bookTwo])
 
 		then:
 		booksAreDifferent
@@ -44,7 +44,7 @@ class HarryPotterBooks extends Specification {
 		def bookTwo = newBook(8, "Philosopher's Stone")
 
 		when:
-		def booksAreDifferent = booksAreDifferent(bookOne, bookTwo)
+		def booksAreDifferent = booksAreDifferent([bookOne, bookTwo])
 
 		then:
 		!booksAreDifferent
@@ -286,9 +286,5 @@ class HarryPotterBooks extends Specification {
 
 	def booksAreDifferent(books) {
 		return books.groupBy { it.name }.size() == books.size()
-	}
-
-	def booksAreDifferent(bookOne, bookTwo) {
-		return bookOne != bookTwo
 	}
 }
