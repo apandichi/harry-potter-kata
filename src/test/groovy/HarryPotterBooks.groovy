@@ -232,9 +232,9 @@ class HarryPotterBooks extends Specification {
 
 	def getDiscountedPrice(books) {
 		def listOfSetsOfBooks = organizeBooksIntoSets(books)
-		return listOfSetsOfBooks.collect {
-			def discount = getDiscount(it)
-			def price = getFullPrice(it)
+		return listOfSetsOfBooks.collect { setOfBooks ->
+			def discount = getDiscount(setOfBooks)
+			def price = getFullPrice(setOfBooks)
 			return getDiscountedPrice(discount, price)
 		}.sum()
 	}
