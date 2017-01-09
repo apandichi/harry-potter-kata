@@ -11,6 +11,7 @@ class HarryPotterBooks extends Specification {
 	static bookThree = new Book(price: 8, name: "Prisoner of Azkaban")
 	static bookFour = new Book(price: 8, name: "Goblet of Fire")
 	static bookFive = new Book(price: 8, name: "Order of the Phoenix")
+	static allBooks = [bookOne, bookTwo, bookThree, bookFour, bookFive]
 
 	def "a book has a specific price"() {
 		given:
@@ -38,7 +39,7 @@ class HarryPotterBooks extends Specification {
 		setOfBooks(1)                 | true
 		setOfBooks(2)                 | true
 		setOfBooks(1) + setOfBooks(1) | false
-		allBooks()                    | true
+		allBooks                      | true
 		[bookOne, bookOne]            | false
 		[bookOne, bookTwo]            | true
 		[bookOne, bookTwo, bookOne]   | false
@@ -144,7 +145,7 @@ class HarryPotterBooks extends Specification {
 		setOfBooks(2)                 | 16
 		setOfBooks(2) + setOfBooks(1) | 24
 		setOfBooks(5)                 | 40
-		allBooks()                    | 40
+		allBooks                      | 40
 	}
 
 	@Unroll
@@ -198,7 +199,7 @@ class HarryPotterBooks extends Specification {
 
 	def copiesOfBook(copies, bookIndex) {
 		copies > 0 ? (1..copies).collect {
-			allBooks().get(bookIndex - 1)
+			allBooks.get(bookIndex - 1)
 		} : []
 	}
 
@@ -240,11 +241,7 @@ class HarryPotterBooks extends Specification {
 	}
 
 	def setOfBooks(numberOfBooks) {
-		return allBooks().subList(0, numberOfBooks)
-	}
-
-	private allBooks() {
-		return [bookOne, bookTwo, bookThree, bookFour, bookFive]
+		return allBooks.subList(0, numberOfBooks)
 	}
 
 	def getDiscount(books) {
